@@ -21,6 +21,7 @@
 		C89B4AAF2B73C1B000E5EEBC /* CountryListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89B4AAE2B73C1B000E5EEBC /* CountryListModel.swift */; };
 		C89B4AB32B73CB0500E5EEBC /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89B4AB22B73CB0500E5EEBC /* MainCoordinator.swift */; };
 		C89B4AB82B74017200E5EEBC /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89B4AB72B74017200E5EEBC /* UIImageView+Extension.swift */; };
+		C89B4ABA2B7401C000E5EEBC /* CountryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89B4AB92B7401C000E5EEBC /* CountryTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		C89B4AAE2B73C1B000E5EEBC /* CountryListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryListModel.swift; sourceTree = "<group>"; };
 		C89B4AB22B73CB0500E5EEBC /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		C89B4AB72B74017200E5EEBC /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
+		C89B4AB92B7401C000E5EEBC /* CountryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +129,7 @@
 			isa = PBXGroup;
 			children = (
 				C89B4A9D2B73B9E300E5EEBC /* CountryListViewController.swift */,
+				C89B4AB92B7401C000E5EEBC /* CountryTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -217,6 +220,7 @@
 				C89B4AB32B73CB0500E5EEBC /* MainCoordinator.swift in Sources */,
 				C89B4AB82B74017200E5EEBC /* UIImageView+Extension.swift in Sources */,
 				C89B4AA02B73BA5300E5EEBC /* Endpoint.swift in Sources */,
+				C89B4ABA2B7401C000E5EEBC /* CountryTableViewCell.swift in Sources */,
 				C89B4AAF2B73C1B000E5EEBC /* CountryListModel.swift in Sources */,
 				C89B4AA52B73BC9700E5EEBC /* Networking.swift in Sources */,
 				C82E266B2B73B8950008476C /* SceneDelegate.swift in Sources */,
