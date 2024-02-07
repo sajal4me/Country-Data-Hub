@@ -17,6 +17,7 @@
 		C89B4AA52B73BC9700E5EEBC /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89B4AA42B73BC9700E5EEBC /* Networking.swift */; };
 		C89B4AA72B73BDF100E5EEBC /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89B4AA62B73BDF100E5EEBC /* NetworkError.swift */; };
 		C89B4AA92B73BF1F00E5EEBC /* CountryListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89B4AA82B73BF1F00E5EEBC /* CountryListViewModel.swift */; };
+		C89B4AAD2B73C08A00E5EEBC /* Usecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89B4AAC2B73C08A00E5EEBC /* Usecase.swift */; };
 		C89B4AAF2B73C1B000E5EEBC /* CountryListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89B4AAE2B73C1B000E5EEBC /* CountryListModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -33,6 +34,7 @@
 		C89B4AA42B73BC9700E5EEBC /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
 		C89B4AA62B73BDF100E5EEBC /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		C89B4AA82B73BF1F00E5EEBC /* CountryListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryListViewModel.swift; sourceTree = "<group>"; };
+		C89B4AAC2B73C08A00E5EEBC /* Usecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Usecase.swift; sourceTree = "<group>"; };
 		C89B4AAE2B73C1B000E5EEBC /* CountryListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryListModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
