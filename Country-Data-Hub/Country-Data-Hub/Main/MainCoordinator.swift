@@ -28,15 +28,7 @@ final class MainCoordinator: Coordinator {
     private func makeCountryListViewControllerFactory() {
        
         let viewModel = makeCountryListViewModel()
-        
-        
-        
-//        let progressBarButton = UIBarButtonItem(customView: progressBarView)
-//        viewController.navigationItem.rightBarButtonItem = progressBarButton
-//        viewController.title = "Joke of the Day"
-        
         let viewController = CountryListViewController(viewModel: viewModel)
-        navigationController.navigationBar.prefersLargeTitles = true
         navigationController = UINavigationController(rootViewController: viewController)
     }
     
