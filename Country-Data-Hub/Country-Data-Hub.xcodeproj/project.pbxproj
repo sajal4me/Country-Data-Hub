@@ -23,6 +23,7 @@
 		C89B4AB82B74017200E5EEBC /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89B4AB72B74017200E5EEBC /* UIImageView+Extension.swift */; };
 		C89B4ABA2B7401C000E5EEBC /* CountryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89B4AB92B7401C000E5EEBC /* CountryTableViewCell.swift */; };
 		C89B4ABC2B7404A500E5EEBC /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89B4ABB2B7404A500E5EEBC /* SearchResultsViewController.swift */; };
+		C89B4ABE2B7406D900E5EEBC /* UISearchBar+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89B4ABD2B7406D900E5EEBC /* UISearchBar+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 		C89B4AB72B74017200E5EEBC /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 		C89B4AB92B7401C000E5EEBC /* CountryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryTableViewCell.swift; sourceTree = "<group>"; };
 		C89B4ABB2B7404A500E5EEBC /* SearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
+		C89B4ABD2B7406D900E5EEBC /* UISearchBar+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchBar+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +143,7 @@
 			isa = PBXGroup;
 			children = (
 				C89B4AB72B74017200E5EEBC /* UIImageView+Extension.swift */,
+				C89B4ABD2B7406D900E5EEBC /* UISearchBar+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -221,6 +224,7 @@
 				C89B4AAD2B73C08A00E5EEBC /* Usecase.swift in Sources */,
 				C89B4A9E2B73B9E300E5EEBC /* CountryListViewController.swift in Sources */,
 				C89B4ABC2B7404A500E5EEBC /* SearchResultsViewController.swift in Sources */,
+				C89B4ABE2B7406D900E5EEBC /* UISearchBar+Extension.swift in Sources */,
 				C89B4AB32B73CB0500E5EEBC /* MainCoordinator.swift in Sources */,
 				C89B4AB82B74017200E5EEBC /* UIImageView+Extension.swift in Sources */,
 				C89B4AA02B73BA5300E5EEBC /* Endpoint.swift in Sources */,
