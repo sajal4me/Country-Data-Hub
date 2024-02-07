@@ -13,6 +13,7 @@
 		C82E26752B73B8990008476C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C82E26732B73B8990008476C /* LaunchScreen.storyboard */; };
 		C89B4A9E2B73B9E300E5EEBC /* CountryListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89B4A9D2B73B9E300E5EEBC /* CountryListViewController.swift */; };
 		C89B4AA02B73BA5300E5EEBC /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89B4A9F2B73BA5300E5EEBC /* Endpoint.swift */; };
+		C89B4AA22B73BAB300E5EEBC /* Target.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89B4AA12B73BAB300E5EEBC /* Target.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		C82E26762B73B8990008476C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C89B4A9D2B73B9E300E5EEBC /* CountryListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryListViewController.swift; sourceTree = "<group>"; };
 		C89B4A9F2B73BA5300E5EEBC /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
+		C89B4AA12B73BAB300E5EEBC /* Target.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Target.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,7 @@
 				C82E266A2B73B8950008476C /* SceneDelegate.swift */,
 				C89B4A9D2B73B9E300E5EEBC /* CountryListViewController.swift */,
 				C89B4A9F2B73BA5300E5EEBC /* Endpoint.swift */,
+				C89B4AA12B73BAB300E5EEBC /* Target.swift */,
 				C82E26712B73B8990008476C /* Assets.xcassets */,
 				C82E26732B73B8990008476C /* LaunchScreen.storyboard */,
 				C82E26762B73B8990008476C /* Info.plist */,
@@ -141,6 +144,7 @@
 				C89B4A9E2B73B9E300E5EEBC /* CountryListViewController.swift in Sources */,
 				C89B4AA02B73BA5300E5EEBC /* Endpoint.swift in Sources */,
 				C82E266B2B73B8950008476C /* SceneDelegate.swift in Sources */,
+				C89B4AA22B73BAB300E5EEBC /* Target.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
