@@ -72,7 +72,7 @@
 			children = (
 				C89B4AB12B73CAB600E5EEBC /* Main */,
 				C89B4AB02B73C1B700E5EEBC /* Model */,
-				C89B4A9D2B73B9E300E5EEBC /* CountryListViewController.swift */,
+				C89B4AB42B73CF3400E5EEBC /* View */,
 				C89B4AAA2B73BF8200E5EEBC /* ViewModel */,
 				C89B4AA32B73BC4C00E5EEBC /* Network */,
 			);
@@ -118,6 +118,14 @@
 				C89B4AB22B73CB0500E5EEBC /* MainCoordinator.swift */,
 			);
 			path = Main;
+			sourceTree = "<group>";
+		};
+		C89B4AB42B73CF3400E5EEBC /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C89B4A9D2B73B9E300E5EEBC /* CountryListViewController.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
