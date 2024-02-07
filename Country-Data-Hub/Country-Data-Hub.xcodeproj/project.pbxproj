@@ -16,6 +16,7 @@
 		C89B4AA22B73BAB300E5EEBC /* Target.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89B4AA12B73BAB300E5EEBC /* Target.swift */; };
 		C89B4AA52B73BC9700E5EEBC /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89B4AA42B73BC9700E5EEBC /* Networking.swift */; };
 		C89B4AA72B73BDF100E5EEBC /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89B4AA62B73BDF100E5EEBC /* NetworkError.swift */; };
+		C89B4AA92B73BF1F00E5EEBC /* CountryListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89B4AA82B73BF1F00E5EEBC /* CountryListViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		C89B4AA12B73BAB300E5EEBC /* Target.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Target.swift; sourceTree = "<group>"; };
 		C89B4AA42B73BC9700E5EEBC /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
 		C89B4AA62B73BDF100E5EEBC /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
+		C89B4AA82B73BF1F00E5EEBC /* CountryListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryListViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +82,7 @@
 				C89B4AA12B73BAB300E5EEBC /* Target.swift */,
 				C89B4AA42B73BC9700E5EEBC /* Networking.swift */,
 				C89B4AA62B73BDF100E5EEBC /* NetworkError.swift */,
+				C89B4AA82B73BF1F00E5EEBC /* CountryListViewModel.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -155,6 +158,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C82E26692B73B8950008476C /* AppDelegate.swift in Sources */,
+				C89B4AA92B73BF1F00E5EEBC /* CountryListViewModel.swift in Sources */,
 				C89B4AA72B73BDF100E5EEBC /* NetworkError.swift in Sources */,
 				C89B4A9E2B73B9E300E5EEBC /* CountryListViewController.swift in Sources */,
 				C89B4AA02B73BA5300E5EEBC /* Endpoint.swift in Sources */,
