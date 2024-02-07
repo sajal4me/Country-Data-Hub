@@ -7,13 +7,8 @@
 
 import Foundation
 
-// MARK: - CountryListModel
-struct CountryListModel: Decodable {
-    let countryList: [Country]
-}
-
 // MARK: - Country
-struct Country: Decodable {
+struct CountryModel: Decodable, Hashable {
     let id: Int
     let abbreviation: String
     let capital: String
@@ -25,7 +20,7 @@ struct Country: Decodable {
 }
 
 // MARK: - Media
-struct Media: Decodable {
+struct Media: Decodable, Hashable {
     let flag: String
     let emblem: String
     let orthographic: String

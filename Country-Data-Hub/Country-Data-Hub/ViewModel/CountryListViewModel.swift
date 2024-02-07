@@ -10,7 +10,7 @@ import Foundation
 internal final class CountryListViewModel {
     
     private let usecase: UsecaseProtocol
-    private var countryList = [Country]()
+    private(set) var countryList = [CountryModel]()
     
     internal var onError: ((String) -> Void)?
     internal var onSuccess: (() -> Void)?
@@ -19,12 +19,15 @@ internal final class CountryListViewModel {
         self.usecase = usecase
     }
     
+    @MainActor
     func fetchCountryList() {
         Task {
             do {
                 let countryListModel = try await usecase.fetchCountryList()
-                countryList.append(contentsOf: countryListModel.countryList)
+                countryList.append(contentsOf: countryListModel)
+                onSuccess?()
             } catch {
+                print(error)
                 onError?(error.localizedDescription)
             }
         }
