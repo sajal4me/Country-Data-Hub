@@ -24,7 +24,9 @@ internal final class Networking: NetworkProtocol {
         component.scheme = endpoint.scheme
         component.host = endpoint.baseURL
         component.path = endpoint.path
-        component.queryItems = endpoint.parameters
+        if !endpoint.parameters.isEmpty {
+            component.queryItems = endpoint.parameters
+        }
         
         guard let url = component.url else {
             throw NetworkError.invalidURL
