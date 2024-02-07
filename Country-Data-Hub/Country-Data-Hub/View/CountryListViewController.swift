@@ -22,20 +22,12 @@ final class CountryListViewController: UIViewController {
         return label
     }()
     
-    private let rightBarButtonImage: UIImageView = {
-        let imageView = UIImageView()
-        //imageView.image = UIImage(systemName: "line.3.horizontal.decrease.circle")
-        imageView.image = UIImage(systemName: "person.crop.circle.fill")
-       
-        return imageView
-    }()
-    
     private let tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(CountryTableViewCell.self, forCellReuseIdentifier: String(describing: CountryTableViewCell.self))
+        tableView.allowsSelection = false
         return tableView
     }()
-    
    
     init(viewModel: CountryListViewModel) {
         self.viewModel = viewModel
@@ -66,12 +58,15 @@ final class CountryListViewController: UIViewController {
     
     private func setupNavigationBar() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: leftBarButtonLabel)
+        //imageView.image = UIImage(systemName: "line.3.horizontal.decrease.circle")
         
         navigationItem.rightBarButtonItem =  UIBarButtonItem(image: UIImage(systemName: "person.crop.circle.fill"), style: .plain, target: self, action:  #selector(rightButtonAction))
     }
 
     @objc func rightButtonAction(sender: UIBarButtonItem) {
         print("sender sender clieck")
+        // TODO
+        // Handle Action
     }
     
     private func setupDataSource() {
