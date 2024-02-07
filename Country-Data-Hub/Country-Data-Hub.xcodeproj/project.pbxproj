@@ -61,13 +61,21 @@
 				C82E26682B73B8950008476C /* AppDelegate.swift */,
 				C82E266A2B73B8950008476C /* SceneDelegate.swift */,
 				C89B4A9D2B73B9E300E5EEBC /* CountryListViewController.swift */,
-				C89B4A9F2B73BA5300E5EEBC /* Endpoint.swift */,
-				C89B4AA12B73BAB300E5EEBC /* Target.swift */,
+				C89B4AA32B73BC4C00E5EEBC /* Network */,
 				C82E26712B73B8990008476C /* Assets.xcassets */,
 				C82E26732B73B8990008476C /* LaunchScreen.storyboard */,
 				C82E26762B73B8990008476C /* Info.plist */,
 			);
 			path = "Country-Data-Hub";
+			sourceTree = "<group>";
+		};
+		C89B4AA32B73BC4C00E5EEBC /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				C89B4A9F2B73BA5300E5EEBC /* Endpoint.swift */,
+				C89B4AA12B73BAB300E5EEBC /* Target.swift */,
+			);
+			path = Network;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
