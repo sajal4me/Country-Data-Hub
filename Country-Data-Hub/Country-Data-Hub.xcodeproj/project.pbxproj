@@ -67,6 +67,7 @@
 				C82E26682B73B8950008476C /* AppDelegate.swift */,
 				C82E266A2B73B8950008476C /* SceneDelegate.swift */,
 				C89B4A9D2B73B9E300E5EEBC /* CountryListViewController.swift */,
+				C89B4AAA2B73BF8200E5EEBC /* ViewModel */,
 				C89B4AA32B73BC4C00E5EEBC /* Network */,
 				C82E26712B73B8990008476C /* Assets.xcassets */,
 				C82E26732B73B8990008476C /* LaunchScreen.storyboard */,
@@ -82,9 +83,16 @@
 				C89B4AA12B73BAB300E5EEBC /* Target.swift */,
 				C89B4AA42B73BC9700E5EEBC /* Networking.swift */,
 				C89B4AA62B73BDF100E5EEBC /* NetworkError.swift */,
-				C89B4AA82B73BF1F00E5EEBC /* CountryListViewModel.swift */,
 			);
 			path = Network;
+			sourceTree = "<group>";
+		};
+		C89B4AAA2B73BF8200E5EEBC /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C89B4AA82B73BF1F00E5EEBC /* CountryListViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
