@@ -15,7 +15,7 @@ final class CountryListViewController: UIViewController {
     enum Section {
         case main
     }
-
+    
     private let leftBarButtonLabel: UILabel = {
         let label = UILabel()
         label.text = "WrkSpot"
@@ -30,7 +30,7 @@ final class CountryListViewController: UIViewController {
         tableView.allowsSelection = false
         return tableView
     }()
-   
+    
     init(viewModel: CountryListViewModel) {
         self.viewModel = viewModel
         
@@ -77,7 +77,7 @@ final class CountryListViewController: UIViewController {
     
     private func configureSearchBar() {
         searchViewController.searchBar.searchTextField.clearButtonMode = .never
-
+        
         let searchTextField = searchViewController.searchBar.searchTextField
         searchTextField.attributedPlaceholder = NSAttributedString(string: "Search by Country", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .regular), .foregroundColor: UIColor.gray])
         
@@ -95,7 +95,7 @@ final class CountryListViewController: UIViewController {
         searchViewController.searchBar.showsBookmarkButton = true
         searchViewController.searchBar.delegate = self
     }
-
+    
     @objc func rightButtonAction(sender: UIBarButtonItem) {
         print("sender sender clieck")
         // TODO
@@ -111,9 +111,9 @@ final class CountryListViewController: UIViewController {
     }
     
     private func bindUI() {
-//        if viewModel.state == .loading {
-//            
-//        }
+        //        if viewModel.state == .loading {
+        //
+        //        }
         viewModel.onSuccess = { [weak self] in
             guard let self = self else { return }
             
@@ -127,15 +127,16 @@ final class CountryListViewController: UIViewController {
     
     private func updateDataSource(countryList: [CountryModel]) {
         var snapshot = NSDiffableDataSourceSnapshot<Section, CountryModel>()
-        
         snapshot.appendSections([.main])
+        
         if case .populationFilterActive(let countryList) = viewModel.state {
             snapshot.appendItems(countryList)
+            dataSource?.apply(snapshot, animatingDifferences: true)
+            
         } else if case .coutryListLoaded(let countryList) = viewModel.state {
             snapshot.appendItems(countryList)
+            dataSource?.apply(snapshot, animatingDifferences: false)
         }
-        
-        dataSource?.apply(snapshot, animatingDifferences: true)
     }
 }
 
@@ -157,6 +158,10 @@ extension CountryListViewController: UISearchResultsUpdating, UISearchBarDelegat
     }
     
     func searchBarBookmarkButtonClicked(_ searchBar: UISearchBar) {
+        presentPopulationFilter()
+    }
+    
+    private func presentPopulationFilter() {
         let alertController = UIAlertController(title: "Population", message: "Filter Population based on the Selcted Field", preferredStyle: .actionSheet)
         
         alertController.addAction(UIAlertAction(title: PopulationFilter.lessThan1Million.stringValue, style: .default, handler: { action in
@@ -171,7 +176,7 @@ extension CountryListViewController: UISearchResultsUpdating, UISearchBarDelegat
             self.filter(population: .lessThan10Million)
         }))
         
-        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in 
+        alertController.addAction(UIAlertAction(title: "Reset", style: .cancel, handler: { action in
             self.viewModel.resetPopulationFilter()
             alertController.dismiss(animated: true)
         }))
