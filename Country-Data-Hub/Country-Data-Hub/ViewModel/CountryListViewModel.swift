@@ -36,14 +36,22 @@ enum PopulationFilter {
 }
 
 internal final class CountryListViewModel {
-    
-    private let usecase: UsecaseProtocol
-    private var countryList = [CountryModel]()
-    
     enum State {
         case loading
         case populationFilterActive([CountryModel])
         case coutryListLoaded([CountryModel])
+    }
+    
+    private let usecase: UsecaseProtocol
+    private var countryList = [CountryModel]()
+    private let date: () -> Date
+    private let timeZone: TimeZone
+    
+    internal var onError: ((String) -> Void)?
+    internal var onSuccess: (() -> Void)?
+    
+    var country:  [CountryModel] {
+        countryList
     }
     
     private(set) var state: State = .loading {
@@ -52,15 +60,23 @@ internal final class CountryListViewModel {
         }
     }
     
-    var country:  [CountryModel] {
-        countryList
+    internal var formattedDate: String  {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .short
+        dateFormatter.timeStyle = .short
+        let date = self.date()
+        let timeZoneAbbreviation = timeZone.abbreviation(for: date) ?? ""
+        let formattedDate = "\(dateFormatter.string(from: date)) \(timeZoneAbbreviation)"
+        return formattedDate
     }
     
-    internal var onError: ((String) -> Void)?
-    internal var onSuccess: (() -> Void)?
-    
-    init(usecase: UsecaseProtocol = Usecase()) {
+    init(usecase: UsecaseProtocol = Usecase(),
+         date: @escaping () -> Date = { Date() },
+         timeZone: TimeZone = TimeZone.current) {
+        
         self.usecase = usecase
+        self.date = date
+        self.timeZone = timeZone
     }
     
     @MainActor
@@ -84,7 +100,7 @@ internal final class CountryListViewModel {
     
     func getCountryList(for text: String) -> [CountryModel] {
         return countryList.filter { model in
-            model.name.hasPrefix(text)
+            model.name.lowercased().hasPrefix(text.lowercased())
         }
     }
     

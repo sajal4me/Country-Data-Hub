@@ -50,8 +50,6 @@ final class CountryListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Country List"
-        
         setupNavigationBar()
         configureSearchBar()
         setupDataSource()
@@ -61,6 +59,7 @@ final class CountryListViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        title = viewModel.formattedDate
         searchViewController.searchResultsUpdater = self
         
         navigationItem.searchController = searchViewController
