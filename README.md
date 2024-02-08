@@ -5,11 +5,11 @@
 Welcome to CountryInfo, an iOS application designed to provide users with information about various countries around the world. This app utilizes the sample API from [Sample APIs](https://api.sampleapis.com/countries/countries) to fetch details such as country name, flag, population, currency, and capital.
 
 ## Preview  
-<img src=https://github.com/sajal4me/Country-Data-Hub/assets/17638808/e5863966-bc3c-4366-9b10-b990ec13962b width="350" /> 
+<img src=https://github.com/sajal4me/Country-Data-Hub/assets/17638808/e5863966-bc3c-4366-9b10-b990ec13962b width="250" /> 
 
-<img src=https://github.com/sajal4me/Country-Data-Hub/assets/17638808/1d2f7f92-9b18-4fe7-af6f-c53a08cfdcbc width="350" /> 
+<img src=https://github.com/sajal4me/Country-Data-Hub/assets/17638808/1d2f7f92-9b18-4fe7-af6f-c53a08cfdcbc width="250" /> 
 
-<img src=https://github.com/sajal4me/Country-Data-Hub/assets/17638808/0aa7c73d-e691-4d97-9a84-198aa6087e01 width="350" /> 
+<img src=https://github.com/sajal4me/Country-Data-Hub/assets/17638808/0aa7c73d-e691-4d97-9a84-198aa6087e01 width="250" /> 
 
 
 **Note**
