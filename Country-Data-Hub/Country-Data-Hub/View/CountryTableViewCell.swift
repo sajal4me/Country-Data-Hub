@@ -11,6 +11,7 @@ final class CountryTableViewCell: UITableViewCell {
     private let posterSize = CGSize(width: 50, height: 60)
     private let countryLabel: UILabel = {
         let countryLabel = UILabel()
+        countryLabel.numberOfLines = 2
         countryLabel.font = UIFont.systemFont(ofSize: 14)
         return countryLabel
     }()
@@ -39,6 +40,7 @@ final class CountryTableViewCell: UITableViewCell {
     private let countryImageView: UIImageView = {
         let countryImageView = UIImageView()
         countryImageView.contentMode = .scaleAspectFit
+        countryImageView.image = UIImage(systemName: "flag.checkered.circle")
         return countryImageView
     }()
     
@@ -67,7 +69,7 @@ final class CountryTableViewCell: UITableViewCell {
         ])
         rightStackView.spacing = 5
         rightStackView.axis = .vertical
-        rightStackView.distribution = .equalSpacing
+        rightStackView.distribution = .fillEqually
         
         let mainVStack = UIStackView(arrangedSubviews: [
             flagStackView,
@@ -76,17 +78,16 @@ final class CountryTableViewCell: UITableViewCell {
         
         mainVStack.axis = .horizontal
         mainVStack.translatesAutoresizingMaskIntoConstraints = false
-        mainVStack.alignment = .fill
-        mainVStack.distribution = .equalSpacing
+        mainVStack.distribution = .fillProportionally
         addSubview(mainVStack)
         
         NSLayoutConstraint.activate([
             countryImageView.widthAnchor.constraint(equalToConstant: posterSize.width),
             countryImageView.heightAnchor.constraint(equalToConstant: posterSize.height),
             mainVStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
-            mainVStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
-            mainVStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
-            mainVStack.topAnchor.constraint(equalTo: topAnchor, constant: 8)
+            mainVStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
+            mainVStack.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -8),
+            mainVStack.topAnchor.constraint(equalTo: topAnchor, constant: 8),
         ])
     }
     
