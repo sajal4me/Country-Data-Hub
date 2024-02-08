@@ -95,11 +95,22 @@ final class CountryTableViewCell: UITableViewCell {
         
         countryImageView.dm_setImage(posterPath: model.media.flag)
         countryLabel.text = model.name
-        capitalLabel.text = "Capital: \(model.capital)"
-        currencyLabel.text = "Currency: \(model.currency)"
+        if model.capital.isEmpty {
+            capitalLabel.text = "Capital: N/A"
+        } else {
+            capitalLabel.text = "Capital: \(model.capital)"
+        }
+        
+        if model.currency.isEmpty {
+            currencyLabel.text = "Currency: N/A"
+        } else {
+            currencyLabel.text = "Currency: \(model.currency)"
+        }
        
         if let population = model.population {
             populationLabel.text = "Population: \(population)"
+        } else {
+            populationLabel.text = "Population: N/A"
         }
     }
     
