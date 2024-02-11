@@ -383,6 +383,7 @@
 				DEVELOPMENT_TEAM = F7HDEWM8SU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Country-Data-Hub/Main/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Country Info";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
@@ -411,6 +412,7 @@
 				DEVELOPMENT_TEAM = F7HDEWM8SU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Country-Data-Hub/Main/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Country Info";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
