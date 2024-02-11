@@ -100,7 +100,7 @@ internal final class CountryListViewModel {
     
     func getCountryList(for text: String) -> [CountryModel] {
         return countryList.filter { model in
-            model.name.lowercased().contains(text.lowercased())
+            model.name.lowercased().hasPrefix(text.lowercased())
         }
     }
     
