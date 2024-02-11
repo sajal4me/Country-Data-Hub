@@ -57,7 +57,6 @@ internal final class CountryListViewModel: ViewModelType {
                     return ($0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending)
                 }
             }
-            .eraseToAnyPublisher()
         
         let countryListIgnoringError = countryListPublisher
             .replaceError(with: [])
