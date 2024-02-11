@@ -39,7 +39,6 @@ extension SearchResultsViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-       // let cell: MovieCell = tableView.dm_dequeueReusableCellWithDefaultIdentifier()
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "CountryTableViewCell") as? CountryTableViewCell else {
             fatalError("Undablet to dequeue cell")
         }

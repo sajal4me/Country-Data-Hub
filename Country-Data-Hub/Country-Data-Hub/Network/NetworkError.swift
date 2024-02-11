@@ -13,6 +13,7 @@ enum NetworkError: Error, Equatable {
     case underMaintenance
     case invalidURL
     case invalidData
+    case failedRequest
     case decodableFail(String)
     case dataTaskError(String)
     case custom(String)
@@ -33,6 +34,8 @@ enum NetworkError: Error, Equatable {
             return errorMessage
         case let .custom(errorMessage):
             return errorMessage
+        case .failedRequest:
+            return "Request failed to load"
         }
     }
 }

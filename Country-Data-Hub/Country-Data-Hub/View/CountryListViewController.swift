@@ -6,9 +6,10 @@
 //
 
 import UIKit
+import Combine
 
 final class CountryListViewController: UIViewController {
-    
+    private var cancellables = Set<AnyCancellable>()
     private let viewModel: CountryListViewModel
     private var dataSource: UITableViewDiffableDataSource<Section, CountryModel>?
     
@@ -23,12 +24,21 @@ final class CountryListViewController: UIViewController {
     }()
     
     let searchViewController = UISearchController(searchResultsController: SearchResultsViewController())
+    private var searchSubject = CurrentValueSubject<String, Never>("")
+    private var poupulationFilterSubject = CurrentValueSubject<PopulationFilter?, Never>(nil)
     
     private let tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(CountryTableViewCell.self, forCellReuseIdentifier: String(describing: CountryTableViewCell.self))
         tableView.allowsSelection = false
+        tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
+    }()
+    
+    private lazy var activityIndicatorView: UIActivityIndicatorView = {
+        let activityIndicatorView = UIActivityIndicatorView(style: .medium)
+        activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
+        return activityIndicatorView
     }()
     
     init(viewModel: CountryListViewModel) {
@@ -37,35 +47,47 @@ final class CountryListViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
+    @available(*, unavailable, renamed: "init(viewModel:)")
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     override func loadView() {
         let view = UIView()
-        view.backgroundColor = UIColor.blue
-        self.view = tableView
+        
+        view.backgroundColor = UIColor.white
+        view.addSubview(tableView)
+        tableView.addSubview(activityIndicatorView)
+       
+        NSLayoutConstraint.activate([
+            tableView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0),
+            tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
+            tableView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0),
+            activityIndicatorView.centerXAnchor.constraint(equalTo: tableView.safeAreaLayoutGuide.centerXAnchor),
+            activityIndicatorView.centerYAnchor.constraint(equalTo: tableView.safeAreaLayoutGuide.centerYAnchor)
+        ])
+        self.view = view
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setupNavigationBar()
         configureSearchBar()
         setupDataSource()
         bindUI()
-        viewModel.fetchCountryList()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        title = viewModel.formattedDate
         searchViewController.searchResultsUpdater = self
         
         navigationItem.searchController = searchViewController
         navigationItem.hidesSearchBarWhenScrolling = false
         
         definesPresentationContext = true
+        activityIndicatorView.startAnimating()
     }
     
     private func setupNavigationBar() {
@@ -96,7 +118,7 @@ final class CountryListViewController: UIViewController {
     }
     
     @objc func rightButtonAction(sender: UIBarButtonItem) {
-        print("sender sender clieck")
+        print("sender click")
         // TODO
         // Handle Action
     }
@@ -110,50 +132,50 @@ final class CountryListViewController: UIViewController {
     }
     
     private func bindUI() {
-        //        if viewModel.state == .loading {
-        //
-        //        }
-        viewModel.onSuccess = { [weak self] in
-            guard let self = self else { return }
-            
-            self.updateDataSource(countryList: self.viewModel.country)
-        }
-        viewModel.onError = { error in
-            // TODO
-            // Add Error Handling
-        }
+
+        let input = CountryListViewModel
+            .Input(
+                searchBarText: searchSubject.eraseToAnyPublisher(),
+                populationFilter: poupulationFilterSubject.eraseToAnyPublisher()
+            )
+        
+        let output = viewModel.transform(input: input)
+        
+        output
+            .title
+            .sink(receiveValue: { [weak self] title in
+                self?.title = title
+            })
+            .store(in: &cancellables)
+        
+        output
+            .countryList
+            .sink(receiveValue: applySnapshot)
+            .store(in: &cancellables)
+        
+        output
+            .filteredCountryList
+            .sink(receiveValue: { [weak self] filteredList in
+                if let controller = self?.searchViewController.searchResultsController as? SearchResultsViewController {
+                    controller.countryList = filteredList
+                }
+            })
+            .store(in: &cancellables)
     }
     
-    private func updateDataSource(countryList: [CountryModel]) {
+    private func applySnapshot(_ models: [CountryModel]) {
+        self.activityIndicatorView.stopAnimating()
         var snapshot = NSDiffableDataSourceSnapshot<Section, CountryModel>()
         snapshot.appendSections([.main])
-        
-        if case .populationFilterActive(let countryList) = viewModel.state {
-            snapshot.appendItems(countryList)
-            dataSource?.apply(snapshot, animatingDifferences: true)
-            
-        } else if case .coutryListLoaded(let countryList) = viewModel.state {
-            snapshot.appendItems(countryList)
-            dataSource?.apply(snapshot, animatingDifferences: false)
-        }
+        snapshot.appendItems(models)
+        dataSource?.apply(snapshot, animatingDifferences: true)
     }
 }
 
 extension CountryListViewController: UISearchResultsUpdating, UISearchBarDelegate {
     
     func updateSearchResults(for searchController: UISearchController) {
-        if let searchText = searchController.searchBar.text {
-            let filteredList = viewModel.getCountryList(for: searchText)
-            
-            self.update(searchController: searchController, countryList: filteredList)
-        }
-    }
-    
-    private func update(searchController: UISearchController, countryList: [CountryModel]) {
-        if let searchController = searchController.searchResultsController as? SearchResultsViewController {
-            searchController.countryList = countryList
-        }
-
+        self.searchSubject.value = searchController.searchBar.text ?? ""
     }
     
     func searchBarBookmarkButtonClicked(_ searchBar: UISearchBar) {
@@ -164,26 +186,22 @@ extension CountryListViewController: UISearchResultsUpdating, UISearchBarDelegat
         let alertController = UIAlertController(title: "Population", message: "Filter Population based on the Selcted Field", preferredStyle: .actionSheet)
         
         alertController.addAction(UIAlertAction(title: PopulationFilter.lessThan1Million.stringValue, style: .default, handler: { action in
-            self.filter(population: .lessThan1Million)
+            self.poupulationFilterSubject.value = PopulationFilter.lessThan10Million
         }))
         
         alertController.addAction(UIAlertAction(title: PopulationFilter.lessThan5Million.stringValue, style: .default, handler: { action in
-            self.filter(population: .lessThan5Million)
+            self.poupulationFilterSubject.value = .lessThan5Million
         }))
         
         alertController.addAction(UIAlertAction(title: PopulationFilter.lessThan10Million.stringValue, style: .default, handler: { action in
-            self.filter(population: .lessThan10Million)
+            self.poupulationFilterSubject.value = .lessThan10Million
         }))
         
         alertController.addAction(UIAlertAction(title: "Reset", style: .cancel, handler: { action in
-            self.viewModel.resetPopulationFilter()
+            self.poupulationFilterSubject.value = nil
             alertController.dismiss(animated: true)
         }))
         
         self.present(alertController, animated: true)
-    }
-    
-    private func filter(population: PopulationFilter) {
-       self.viewModel.getCountryList(for: population)
     }
 }
