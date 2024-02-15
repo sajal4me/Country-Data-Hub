@@ -69,15 +69,11 @@ internal final class CountryListViewModel: ViewModelType {
         
         let countryListFilteredByPopulation = input
             .populationFilter
-            .combineLatest(countryListIgnoringError)
+            .compactMap { $0 }
+            .zip(countryListIgnoringError)
             .map { populationFilter, countryList in
-                
-                if let populationFilter = populationFilter {
-                    return countryList.filter { model in
-                        model.population ?? 0 < populationFilter.number
-                    }
-                } else {
-                    return countryList
+                return countryList.filter { model in
+                    model.population ?? 0 < populationFilter.number
                 }
             }
             .eraseToAnyPublisher()
