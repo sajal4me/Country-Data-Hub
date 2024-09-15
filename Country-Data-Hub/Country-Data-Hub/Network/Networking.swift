@@ -6,9 +6,10 @@
 //
 
 import Foundation
+import Combine
 
 protocol NetworkProtocol {
-    func request<T: Decodable>(endpoint: Endpoint, decoder: JSONDecoder) async throws -> T
+    func request<T: Decodable>(endpoint: Endpoint, decoder: JSONDecoder) -> AnyPublisher<T, Error>
 }
 
 internal final class Networking: NetworkProtocol {
@@ -19,7 +20,7 @@ internal final class Networking: NetworkProtocol {
         self.session = session
     }
     
-    func request<T: Decodable>(endpoint: Endpoint, decoder: JSONDecoder) async throws -> T {
+    func request<T: Decodable>(endpoint: Endpoint, decoder: JSONDecoder) -> AnyPublisher<T, Error> {
         var component = URLComponents()
         component.scheme = endpoint.scheme
         component.host = endpoint.baseURL
@@ -29,22 +30,31 @@ internal final class Networking: NetworkProtocol {
         }
         
         guard let url = component.url else {
-            throw NetworkError.invalidURL
+            return Fail(outputType: T.self, failure: NetworkError.invalidURL).eraseToAnyPublisher()
         }
         
         var request = URLRequest(url: url)
         request.httpMethod = endpoint.method
         
-        do  {
-            let (data, response) = try await session.data(from: url)
-            guard let httpResponse = response as? HTTPURLResponse, isOK(httpResponse) else {
-                throw NetworkError.invalidData
+        return session.dataTaskPublisher(for: url)
+            .tryMap { [weak self] data, response -> T in
+                
+                guard let self = self, let response = response as? HTTPURLResponse,
+                      self.isOK(response) else {
+                    throw NetworkError.failedRequest
+                }
+                
+                do {
+                    return try decoder.decode(T.self, from: data)
+                } catch {
+                    throw NetworkError.invalidURL
+                }
             }
-            return try decoder.decode(T.self, from: data)
-            
-        } catch {
-            throw NetworkError.decodableFail(error.localizedDescription)
-        }
+            .mapError { error -> NetworkError in
+                error as? NetworkError ?? .failedRequest
+            }
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
     }
     
     private func isOK(_ response: HTTPURLResponse) -> Bool {

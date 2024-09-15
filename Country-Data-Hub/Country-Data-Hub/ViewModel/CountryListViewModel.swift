@@ -6,113 +6,85 @@
 //
 
 import Foundation
+import Combine
 
-enum PopulationFilter {
-    case lessThan1Million
-    case lessThan5Million
-    case lessThan10Million
+protocol ViewModelType {
+    associatedtype Input
+    associatedtype Output
     
-    var number: Int {
-        switch self {
-        case .lessThan1Million:
-            return 10_000_00
-        case .lessThan5Million:
-            return 50_000_00
-        case .lessThan10Million:
-            return 10_000_000
-        }
-    }
-    
-    var stringValue: String {
-        switch self {
-        case .lessThan1Million:
-            return "< 1 M"
-        case .lessThan5Million:
-            return "< 5 M"
-        case .lessThan10Million:
-            return "< 10 M"
-        }
-    }
+    func transform(input: Input) -> Output
 }
 
-internal final class CountryListViewModel {
-    enum State {
-        case loading
-        case populationFilterActive([CountryModel])
-        case coutryListLoaded([CountryModel])
-    }
-    
+internal final class CountryListViewModel: ViewModelType {
     private let usecase: UsecaseProtocol
-    private var countryList = [CountryModel]()
     private let date: () -> Date
     private let timeZone: TimeZone
     
-    internal var onError: ((String) -> Void)?
-    internal var onSuccess: (() -> Void)?
-    
-    var country:  [CountryModel] {
-        countryList
-    }
-    
-    private(set) var state: State = .loading {
-        didSet {
-            onSuccess?()
-        }
-    }
-    
-    internal var formattedDate: String  {
+    internal var formattedDate: Just<String>  {
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .short
         dateFormatter.timeStyle = .short
         let date = self.date()
         let timeZoneAbbreviation = timeZone.abbreviation(for: date) ?? ""
         let formattedDate = "\(dateFormatter.string(from: date)) \(timeZoneAbbreviation)"
-        return formattedDate
+        return Just(formattedDate)
     }
     
     init(usecase: UsecaseProtocol = Usecase(),
          date: @escaping () -> Date = { Date() },
          timeZone: TimeZone = TimeZone.current) {
-        
+
         self.usecase = usecase
         self.date = date
         self.timeZone = timeZone
     }
     
-    @MainActor
-    func fetchCountryList() {
-        Task {
-            do {
-                
-                let countryListModel = try await usecase.fetchCountryList()
-               
-                let sortedList = countryListModel.sorted {
+    struct Input {
+        let searchBarText: AnyPublisher<String, Never>
+        let populationFilter: AnyPublisher<PopulationFilter?, Never>
+    }
+    
+    struct Output {
+        let title: AnyPublisher<String, Never>
+        let countryList: AnyPublisher<[CountryModel], Never>
+        let filteredCountryList: AnyPublisher<[CountryModel], Never>
+    }
+    
+    func transform(input: Input) -> Output {
+        let countryListPublisher = usecase.fetchCountryList()
+            .map {
+                $0.sorted {
                     return ($0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending)
                 }
-                
-                countryList.append(contentsOf: sortedList)
-                state = .coutryListLoaded(sortedList)
-            } catch {
-                onError?(error.localizedDescription)
             }
-        }
-    }
-    
-    func getCountryList(for text: String) -> [CountryModel] {
-        return countryList.filter { model in
-            model.name.lowercased().hasPrefix(text.lowercased())
-        }
-    }
-    
-    func getCountryList(for population: PopulationFilter){
-        let filteredList = countryList.filter { model in
-            model.population ?? 0 < population.number
-        }
         
-        state = .populationFilterActive(filteredList)
-    }
-    
-    func resetPopulationFilter() {
-        self.state = .coutryListLoaded(countryList)
+        let countryListIgnoringError = countryListPublisher
+            .replaceError(with: [])
+        
+        let countryListFilteredBySearch = input.searchBarText
+            .combineLatest(countryListIgnoringError)
+            .map { searchText, countryList in
+                countryList.filter { $0.name.lowercased().hasPrefix(searchText.lowercased()) }
+            }
+        
+        let countryListFilteredByPopulation = input
+            .populationFilter
+            .compactMap { $0 }
+            .zip(countryListIgnoringError)
+            .map { populationFilter, countryList in
+                return countryList.filter { model in
+                    model.population ?? 0 < populationFilter.number
+                }
+            }
+            .eraseToAnyPublisher()
+        
+        let countryList = countryListIgnoringError
+            .merge(with: countryListFilteredByPopulation)
+        
+        return Output(
+            title: formattedDate.eraseToAnyPublisher(),
+            countryList: countryList.eraseToAnyPublisher(),
+            filteredCountryList: countryListFilteredBySearch.eraseToAnyPublisher()
+        )
     }
 }

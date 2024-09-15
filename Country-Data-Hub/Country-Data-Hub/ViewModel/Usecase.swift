@@ -6,9 +6,10 @@
 //
 
 import Foundation
+import Combine
 
 internal protocol UsecaseProtocol {
-    func fetchCountryList() async throws -> [CountryModel]
+    func fetchCountryList() -> AnyPublisher<[CountryModel], Error>
 }
 
 internal final class Usecase: UsecaseProtocol {
@@ -18,15 +19,11 @@ internal final class Usecase: UsecaseProtocol {
         self.networkProvider = networking
     }
 
-    func fetchCountryList() async throws -> [CountryModel] {
-        
-        let countryList: [CountryModel] = try await networkProvider
+    func fetchCountryList() -> AnyPublisher<[CountryModel], Error> {
+       return networkProvider
             .request(
                 endpoint: Target.countries,
                 decoder: JSONDecoder()
             )
-        
-        return countryList
     }
 }
-
